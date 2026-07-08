@@ -7,6 +7,15 @@ The SCM Content Configurator tool automates the update/modification of a BES fil
 
 ## Screenshots
 
+#### Opening the application:
+<img width="902" height="382" alt="scm-content-configurator-main" src="https://github.com/user-attachments/assets/592ffbd5-e78f-4486-95c5-01103d60f0f4" />
+
+#### Execution In Progress:
+<img width="896" height="380" alt="scm-content-configurator-running" src="https://github.com/user-attachments/assets/ae6c881e-a223-4f4c-a435-21426ac991b5" />
+
+#### Operations Complete:
+<img width="418" height="334" alt="scm-content-configurator-complete" src="https://github.com/user-attachments/assets/ebb0aa92-91a1-4f0f-ae1f-ade31106b31f" />
+
 ## Usage
 Select XLSX File: The security controls Excel file pulled from the Baseline Configuration Management site. ** Must be in XLSX format **
 
