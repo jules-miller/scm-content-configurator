@@ -18,8 +18,8 @@ class Utils():
 		Creates a new description string based on the supplied args.
 		title = name of fixlet
 		ruleId = rule/vuln id
-		chkContent = the VA Check Content or Source Check Content
-		fixText = the VA Fix Text or Source Fix Text
+		chkContent = the Org Check Content or Source Check Content
+		fixText = the Org Fix Text or Source Fix Text
 
 		Returns the description in html format.
 		"""
