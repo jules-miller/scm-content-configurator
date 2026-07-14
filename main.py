@@ -39,9 +39,9 @@ app = customtkinter.CTk() # creates main window instance
 app.title("SCM Fixlet Updater")
 app.geometry("900x350") # main window dimensions
 
-# set va logo image
+# set logo image
 try:
-	app.iconbitmap('va_logo_sm.ico')
+	app.iconbitmap('logo_sm.ico')
 except Exception:
 	mainLogger.warning("Unable to set icon")
 	mainLogger.error(traceback.format_exc())
