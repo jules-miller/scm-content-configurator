@@ -114,7 +114,7 @@ class TestParseXlsx(unittest.TestCase):
     def test_IsCellEmptyTrue(self):
         instance = ParseXlsx(testLogger, xlsxFile)
         dataFrame = instance._CreateDataframe(instance.controlsSheet, list(instance.ruleColSet.keys()))
-        cellData = instance._ParseCellData(dataFrame, instance.controlsIDHeader, 'V-258241', 'VA Check Content')
+        cellData = instance._ParseCellData(dataFrame, instance.controlsIDHeader, 'V-258241', 'ORG Check Content')
         emptyCheck = instance._IsCellEmpty(cellData)
         self.assertEqual(emptyCheck, True)
 
@@ -131,16 +131,16 @@ class TestParseXlsx(unittest.TestCase):
     def test_GrabCellValueStrEmpty(self):
         instance = ParseXlsx(testLogger, xlsxFile)
         dataFrame = instance._CreateDataframe(instance.controlsSheet, list(instance.ruleColSet.keys()))
-        cellData = instance._ParseCellData(dataFrame, instance.controlsIDHeader, 'V-258241', 'VA Check Content')
+        cellData = instance._ParseCellData(dataFrame, instance.controlsIDHeader, 'V-258241', 'ORG Check Content')
         convertToStr = instance.GrabCellValueStr(cellData)
         self.assertEqual(type(convertToStr), str)
         self.assertEqual(len(convertToStr), 0)
     
-    # Test _SetTitleCol - VA Rule Title - use rhel xlsx
+    # Test _SetTitleCol - ORG Rule Title - use rhel xlsx
     def test_SetTitleColVA(self):
         instance = ParseXlsx(testLogger, xlsxFile)
         instance._SetTitleCol()
-        self.assertEqual(instance._titleHeader, 'VA Rule Title')
+        self.assertEqual(instance._titleHeader, 'ORG Rule Title')
 
     # Test _SetTitleCol - Rule Title - use solaris xlsx
     def test_SetTitleColDef(self):
@@ -168,8 +168,8 @@ class TestParseXlsx(unittest.TestCase):
             instance.GetControlsDF()
             self.assertEqual(type(instance.controlsDF), pandas.core.frame.DataFrame)
             self.assertEqual(instance.controlsIDHeader, 'Rule ID')
-            self.assertEqual(instance._titleHeader, 'VA Rule Title')
-        self.assertIn(f"INFO:parse_xlsx_unittesting:Successfully created dataframe | Sheet: {instance.controlsSheet} | Columns: ['Rule ID', 'Source Check Content', 'VA Check Content', 'Source Fix Text', 'VA Fix Text', 'VA Rule Title']", cm1.output)
+            self.assertEqual(instance._titleHeader, 'ORG Rule Title')
+        self.assertIn(f"INFO:parse_xlsx_unittesting:Successfully created dataframe | Sheet: {instance.controlsSheet} | Columns: ['Rule ID', 'Source Check Content', 'ORG Check Content', 'Source Fix Text', 'ORG Fix Text', 'ORG Rule Title']", cm1.output)
 
     # Test GetControlsDF - mock self.ruleColSet class var to force value error - rule id and vuln id missing
     @patch.object(ParseXlsx, "ruleColSet", {"vuln id": str})
@@ -201,7 +201,7 @@ class TestParseXlsx(unittest.TestCase):
         desc = instance.GetDesc('V-258240')
         self.assertEqual(desc, 'dfNotSet')
 
-    # Test GetDesc - VA content
+    # Test GetDesc - ORG content
     def test_GetDescDFVA(self):
         instance = ParseXlsx(testLogger, xlsxFile)
         instance.GetControlsDF()
@@ -209,7 +209,7 @@ class TestParseXlsx(unittest.TestCase):
         self.assertIn('Verify the OpenSSL library is configured to use only VA-approved TLS encryption', desc['chkContent'])
         self.assertIn('Configure the RHEL 9 OpenSSL library to use only VA-approved TLS', desc['fixText'])
 
-    # Test GetDesc - Source content failover because VA content is missing
+    # Test GetDesc - Source content failover because ORG content is missing
     def test_GetDescDFSource(self):
         instance = ParseXlsx(testLogger, xlsxFile)
         instance.GetControlsDF()
@@ -231,13 +231,13 @@ class TestParseXlsx(unittest.TestCase):
         desc = instance._DoesRuleExist('doesnotexist')
         self.assertEqual(desc, False)
 
-    # test GetTitle success - VA Rule Title
+    # test GetTitle success - ORG Rule Title
     def test_GetTitleVA(self):
         instance = ParseXlsx(testLogger, xlsxFile, includeTitle=True)
         instance.GetControlsDF()
         self.assertEqual(type(instance.controlsDF), pandas.core.frame.DataFrame)
         self.assertEqual(instance.controlsIDHeader, 'Rule ID')
-        self.assertEqual(instance._titleHeader, 'VA Rule Title')
+        self.assertEqual(instance._titleHeader, 'ORG Rule Title')
         title = instance.GetTitle('V-258240')
         expectedTitle = 'RHEL 9 must implement VA-approved TLS encryption in the OpenSSL package.'
         self.assertEqual(title, expectedTitle)
