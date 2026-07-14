@@ -337,7 +337,7 @@ class ParseXlsx:
 		"""
 		The public method that will obtain and concatenate the relevant Check Content and Fix Text.
 		
-		Returns a dictionary the VA Check Content and VA Fix Text columns if present. Ex. {'chkContent': 'check text string', 'fixText': 'fix text string'}
+		Returns a dictionary the Check Content and Fix Text columns if present. Ex. {'chkContent': 'check text string', 'fixText': 'fix text string'}
 		Returns 'dfNotSet' if the Security Controls DF was not created.
 		Returns ParseError if exception is encounted when parsing cell data.
 		Returns DataMissing if checkData or fixData is empty - _ParseCellData returned an empty cell
@@ -357,12 +357,12 @@ class ParseXlsx:
 			self._logger.error(f"Failed to parse 'VA Check Content' for {ruleID}")
 			return 'ParseError'
 
-		# if VA Check Content contains data, grab the VA Fix Text column as well
+		# if Check Content contains data, grab the Fix Text column as well
 		if self._IsCellEmpty(checkData) == False:
 			self._logger.info(f"VA Check Content found for {ruleID}")
 			try:
 				fixData = self._ParseCellData(self.controlsDF, self._controlsIDHeader, ruleID, 'VA Fix Text')
-				if self._IsCellEmpty(fixData) == True: # Use the Source Fix Text if the VA Fix Text is empty but VA Check Content exists
+				if self._IsCellEmpty(fixData) == True: # Use the Source Fix Text if the Fix Text is empty but Check Content exists
 					fixData = self._ParseCellData(self.controlsDF, self._controlsIDHeader, ruleID, self._defFixTxtHeader)
 					self._logger.info(f"VA Fix Text is missing for {ruleID}. Using {self.defFixTxtHeader} instead.")
 			except Exception:
@@ -418,9 +418,9 @@ if __name__ == "__main__":
 	if controlsDF == 'ParseError':
 		sys.exit(1)
 
-	rules = ['V-258240', 'V-258241', 'V-258046'] # 258240 contains va check content, 258241 does NOT contain va check content
+	rules = ['V-258240', 'V-258241', 'V-258046'] # 258240 contains check content, 258241 does NOT contain va check content
 
-	# Loop through each rule id and grab the VA content if applicable
+	# Loop through each rule id and grab the content if applicable
 	for rule in rules:
 		try:
 			desc = parseXlsx.GetDesc(rule)
